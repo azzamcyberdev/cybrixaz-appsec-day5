@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}My Profile - AppSec Baseline{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>My Profile</h2>
+  <p><strong>Username:</strong> {{ profile.username }}</p>
+  <p><strong>Member Since:</strong> {{ profile.created_at }}</p>
+  <p><strong>Total Notes Created:</strong> {{ profile.note_count }}</p>
+  {% if profile.updated_at %}
+    <p style="color: #94a3b8; font-size: 13px;">Last updated: {{ profile.updated_at }}</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h3>Edit Profile</h3>
+  <form method="POST" action="{{ url_for('profile') }}">
+    <label for="display_name">Display Name (max 50 chars)</label>
+    <input type="text" id="display_name" name="display_name" value="{{ profile.display_name }}" maxlength="50" placeholder="e.g. Security Researcher">
+
+    <label for="bio">Bio (max 500 chars)</label>
+    <textarea id="bio" name="bio" rows="4" maxlength="500" style="width: 100%; padding: 8px; margin: 6px 0 16px; border: 1px solid #475569; border-radius: 4px; background: #0f172a; color: #fff; box-sizing: border-box; font-family: inherit;">{{ profile.bio }}</textarea>
+
+    <button type="submit">Save Profile</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}AppSec Baseline{% endblock %}</title>
+  <style>
+    body { font-family: sans-serif; background: #0f172a; color: #f8fafc; margin: 40px auto; max-width: 650px; padding: 0 20px; line-height: 1.5; }
+    h1, h2 { color: #38bdf8; }
+    .card { background: #1e293b; padding: 20px; border-radius: 8px; border: 1px solid #334155; margin-bottom: 20px; }
+    input { width: 100%; padding: 8px; margin: 6px 0 16px; border: 1px solid #475569; border-radius: 4px; background: #0f172a; color: #fff; box-sizing: border-box; }
+    button, .btn { background: #38bdf8; color: #0b1120; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; }
+    .btn-secondary { background: #475569; color: #fff; }
+    .error { background: #7f1d1d; color: #fecaca; padding: 10px; border-radius: 4px; margin-bottom: 12px; }
+    .success { background: #14532d; color: #bbf7d0; padding: 10px; border-radius: 4px; margin-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #334155; font-size: 14px; }
+    th { color: #94a3b8; }
+    nav { margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{{ url_for('dashboard') }}" style="color: #38bdf8; text-decoration: none; font-weight: bold;">AppSec Lab</a>
+    <div>
+      {% if session.get('user_id') %}
+        <a href="{{ url_for('dashboard') }}" style="color: #94a3b8; margin-right: 15px; text-decoration: none;">Dashboard</a>
+        <a href="{{ url_for('profile') }}" style="color: #38bdf8; margin-right: 15px; text-decoration: none;">My Profile</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-secondary" style="padding: 4px 10px; font-size: 13px;">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" style="color: #94a3b8; margin-right: 15px; text-decoration: none;">Login</a>
+        <a href="{{ url_for('register') }}" style="color: #94a3b8; text-decoration: none;">Register</a>
+      {% endif %}
+    </div>
+  </nav>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="{{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</body>
+</html>
